@@ -41,7 +41,20 @@ namespace Moton.CoAP.Extensions.DTLS
             
             ThrowIfNotConnected();
 
-            return _socket.ReceiveFrom(buf, off, len, SocketFlags.None, ref _remoteEndPoint);
+            // Set receive timeout - use waitMillis if positive, otherwise use a default timeout
+            // This prevents indefinite blocking during DTLS handshake
+            int timeoutMs = waitMillis > 0 ? waitMillis : 5000; // Default 5 second timeout
+            _socket.ReceiveTimeout = timeoutMs;
+
+            try
+            {
+                return _socket.ReceiveFrom(buf, off, len, SocketFlags.None, ref _remoteEndPoint);
+            }
+            catch (SocketException ex) when (ex.SocketErrorCode == SocketError.TimedOut)
+            {
+                // Return 0 to signal timeout - BouncyCastle DTLS will handle retry/abort
+                return 0;
+            }
         }
 
         public void Send(byte[] buf, int off, int len)
@@ -66,6 +79,14 @@ namespace Moton.CoAP.Extensions.DTLS
             try
             {
                 _socket?.Shutdown(SocketShutdown.Both);
+            }
+            catch (SocketException)
+            {
+                // Ignore - socket may not be connected
+            }
+            catch (ObjectDisposedException)
+            {
+                // Ignore - socket already disposed
             }
             finally
             {

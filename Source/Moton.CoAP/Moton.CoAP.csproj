@@ -1,20 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<Target Name="ImportReleaseNotes" BeforeTargets="GenerateNuspec">
-		<ReadLinesFromFile File="..\..\Build\ReleaseNotes.md">
-			<Output TaskParameter="Lines" ItemName="ReleaseNotes" />
-		</ReadLinesFromFile>
-		<PropertyGroup>
-			<PackageReleaseNotes>@(ReleaseNotes, '%0a')</PackageReleaseNotes>
-		</PropertyGroup>
-	</Target>
-
 	<PropertyGroup>
-		<TargetFrameworks>net452;net5.0;net6.0;netstandard1.3;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net10.0;netstandard2.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
 
 		<AssemblyName>Moton.CoAP</AssemblyName>
 		<RootNamespace>Moton.CoAP</RootNamespace>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Company>Moton</Company>
 		<Product>Moton.CoAP</Product>
 		<Description>Moton.CoAP is a high performance .NET library for CoAP based communication. It provides a CoAP client with CBOR support, block transfer, and DTLS support.</Description>
@@ -31,37 +25,25 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>CoAP Constrained Application Protocol CoAPClient CBOR IoT InternetOfThings Messaging Servo Motor EtherCAT</PackageTags>
 		<NeutralLanguage>en-US</NeutralLanguage>
-		<EnableNETAnalyzers>True</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<PackageIcon>nuget.png</PackageIcon>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<LangVersion>7.3</LangVersion>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)'=='uap10.0'">
-		<PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.10" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\..\Images\nuget.png">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="..\..\LICENSE">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
+		<None Include="..\..\Images\nuget.png" Pack="true" PackagePath="\" />
+		<None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 </Project>

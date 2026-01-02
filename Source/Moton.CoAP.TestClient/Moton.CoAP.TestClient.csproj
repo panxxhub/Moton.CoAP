@@ -1,13 +1,16 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Moton.CoAP.Extensions.DTLS\Moton.CoAP.Extensions.DTLS.csproj" />
-    <ProjectReference Include="..\Moton.CoAP\Moton.CoAP.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Moton.CoAP.Extensions.DTLS\Moton.CoAP.Extensions.DTLS.csproj" />
+		<ProjectReference Include="..\Moton.CoAP\Moton.CoAP.csproj" />
+	</ItemGroup>
 
 </Project>

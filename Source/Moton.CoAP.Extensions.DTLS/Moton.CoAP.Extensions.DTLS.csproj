@@ -1,11 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net452;netstandard2.0;net5.0;net6.0</TargetFrameworks>
+		<TargetFrameworks>net10.0;netstandard2.0</TargetFrameworks>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
 
 		<AssemblyName>Moton.CoAP.Extensions.DTLS</AssemblyName>
 		<RootNamespace>Moton.CoAP.Extensions.DTLS</RootNamespace>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Company>Moton</Company>
 		<Product>Moton.CoAP</Product>
 		<Description>Moton.CoAP DTLS extension for secure CoAP communication.</Description>
@@ -22,36 +25,24 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>CoAP DTLS Security IoT</PackageTags>
 		<NeutralLanguage>en-US</NeutralLanguage>
-		<EnableNETAnalyzers>True</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 		<PackageIcon>nuget.png</PackageIcon>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<LangVersion>7.3</LangVersion>
-		<PackageReleaseNotes>DTLS extension for Moton.CoAP</PackageReleaseNotes>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\Images\nuget.png">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="..\..\LICENSE">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
+		<None Include="..\..\Images\nuget.png" Pack="true" PackagePath="\" />
+<None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Moton.CoAP\Moton.CoAP.csproj" />
-
-		<PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
+		<PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
 	</ItemGroup>
 
 </Project>

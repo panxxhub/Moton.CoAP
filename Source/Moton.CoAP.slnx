@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/Build/">
+    <File Path="../Build/build.ps1" />
+    <File Path="../Build/ReleaseNotes.md" />
+    <File Path="../Build/upload.ps1" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="../README.md" />
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="../Samples/Moton.CoAP.Samples.csproj" />
+  <Project Path="Moton.CoAP.Extensions.DTLS/Moton.CoAP.Extensions.DTLS.csproj" />
+  <Project Path="Moton.CoAP.TestClient/Moton.CoAP.TestClient.csproj" />
+  <Project Path="Moton.CoAP.Tests/Moton.CoAP.Tests.csproj" />
+  <Project Path="Moton.CoAP/Moton.CoAP.csproj" />
+</Solution>

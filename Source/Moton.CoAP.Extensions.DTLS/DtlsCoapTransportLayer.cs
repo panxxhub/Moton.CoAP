@@ -26,6 +26,11 @@ namespace Moton.CoAP.Extensions.DTLS
             get; set;
         } = DtlsVersion.V1_2;
 
+        /// <summary>
+        /// Connection timeout for DTLS handshake. Default is 10 seconds.
+        /// </summary>
+        public TimeSpan ConnectionTimeout { get; set; } = TimeSpan.FromSeconds(10);
+
         public async Task ConnectAsync(CoapTransportLayerConnectOptions connectOptions, CancellationToken cancellationToken)
         {
             if (connectOptions == null)
@@ -42,8 +47,19 @@ namespace Moton.CoAP.Extensions.DTLS
                 _dtlsClient = new DtlsClient(ConvertProtocolVersion(DtlsVersion), (PreSharedKey)Credentials);
 
                 using (cancellationToken.Register(() => _udpTransport?.Close()))
+                using (var timeoutCts = new CancellationTokenSource(ConnectionTimeout))
+                using (var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, timeoutCts.Token))
                 {
-                    _dtlsTransport = await Task.Run(() => clientProtocol.Connect(_dtlsClient, _udpTransport), cancellationToken).ConfigureAwait(false);
+                    linkedCts.Token.Register(() => _udpTransport?.Close());
+                    
+                    try
+                    {
+                        _dtlsTransport = await Task.Run(() => clientProtocol.Connect(_dtlsClient, _udpTransport), linkedCts.Token).ConfigureAwait(false);
+                    }
+                    catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
+                    {
+                        throw new DtlsException("DTLS handshake timed out.", null);
+                    }
                 }
             }
             catch
