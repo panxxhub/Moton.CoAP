@@ -14,22 +14,22 @@ namespace Moton.CoAP.Logging
             get; set;
         }
 
-        public string Source
+        public string? Source
         {
             get; set;
         }
 
-        public Exception Exception
+        public Exception? Exception
         {
             get; set;
         }
 
-        public string Message
+        public string? Message
         {
             get; set;
         }
 
-        public object[] Parameters
+        public object[]? Parameters
         {
             get; set;
         }

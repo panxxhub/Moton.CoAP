@@ -22,9 +22,9 @@ namespace Moton.CoAP.Client
         readonly CoapClientObservationManager _observationManager;
         readonly CoapRequestToMessageConverter _requestToMessageConverter = new CoapRequestToMessageConverter();
         
-        CancellationTokenSource _cancellationToken;
+        CancellationTokenSource? _cancellationToken;
 
-        CoapClientConnectOptions _connectOptions;
+        CoapClientConnectOptions? _connectOptions;
 
         public CoapClient(CoapNetLogger logger)
         {
@@ -112,8 +112,8 @@ namespace Moton.CoAP.Client
                 throw new ArgumentNullException(nameof(observeResponse));
             }
 
-            var requestMessage = _requestToMessageConverter.Convert(observeResponse.Request);
-            requestMessage.Token = observeResponse.Token.Value;
+            var requestMessage = _requestToMessageConverter.Convert(observeResponse.Request!);
+            requestMessage.Token = observeResponse.Token!.Value;
 
             requestMessage.Options.RemoveAll(o => o.Number == CoapMessageOptionNumber.Observe);
             requestMessage.Options.Add(new CoapMessageOptionFactory().CreateObserve(CoapObserveOptionValue.Deregister));
@@ -151,7 +151,7 @@ namespace Moton.CoAP.Client
             {
                 await _lowLevelClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-                var responseMessage = await responseAwaiter.WaitOneAsync(_connectOptions.CommunicationTimeout)
+                var responseMessage = await responseAwaiter.WaitOneAsync(_connectOptions!.CommunicationTimeout)
                     .ConfigureAwait(false);
 
                 if (responseMessage.Code.Equals(CoapMessageCodes.Empty))
@@ -198,7 +198,7 @@ namespace Moton.CoAP.Client
                 }
                 catch (Exception exception)
                 {
-                    if (!_cancellationToken.IsCancellationRequested)
+                    if (!_cancellationToken!.IsCancellationRequested)
                     {
                         _logger.Error(nameof(CoapClient), exception, "Error while receiving messages.");
                     }

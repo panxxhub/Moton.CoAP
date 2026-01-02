@@ -20,9 +20,9 @@ namespace Moton.CoAP.Client
             return _client.StopObservationAsync(this, cancellationToken);
         }
 
-        internal CoapMessageToken Token { get; set; }
+        internal CoapMessageToken? Token { get; set; }
 
-        internal CoapRequest Request { get; set; }
+        internal CoapRequest? Request { get; set; }
     }
 }
 

@@ -2,8 +2,8 @@
 {
     public class CoapObserveOptions
     {
-        public CoapObserveRequest Request { get; set; }
+        public CoapObserveRequest Request { get; set; } = null!;
 
-        public ICoapResponseHandler ResponseHandler { get; set; }
+        public ICoapResponseHandler ResponseHandler { get; set; } = null!;
     }
 }

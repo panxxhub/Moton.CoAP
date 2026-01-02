@@ -23,8 +23,8 @@ namespace Moton.CoAP.LowLevelClient
         readonly ArraySegment<byte> _receiveBuffer = new ArraySegment<byte>(new byte[65535]);
         readonly SemaphoreSlim _syncRoot = new SemaphoreSlim(1, 1);
 
-        CoapClientConnectOptions _connectOptions;
-        CoapTransportLayerAdapter _transportLayerAdapter;
+        CoapClientConnectOptions? _connectOptions;
+        CoapTransportLayerAdapter? _transportLayerAdapter;
 
         public LowLevelCoapClient(CoapNetLogger logger)
         {
@@ -45,7 +45,7 @@ namespace Moton.CoAP.LowLevelClient
             await _syncRoot.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
-                await _transportLayerAdapter.SendAsync(requestMessageBuffer, cancellationToken).ConfigureAwait(false);
+                await _transportLayerAdapter!.SendAsync(requestMessageBuffer, cancellationToken).ConfigureAwait(false);
             }
             finally
             {
@@ -53,9 +53,9 @@ namespace Moton.CoAP.LowLevelClient
             }
         }
 
-        public async Task<CoapMessage> ReceiveAsync(CancellationToken cancellationToken)
+        public async Task<CoapMessage?> ReceiveAsync(CancellationToken cancellationToken)
         {
-            var datagramLength = await _transportLayerAdapter.ReceiveAsync(_receiveBuffer, cancellationToken)
+            var datagramLength = await _transportLayerAdapter!.ReceiveAsync(_receiveBuffer, cancellationToken)
                 .ConfigureAwait(false);
 
             if (datagramLength == 0)
@@ -118,11 +118,11 @@ namespace Moton.CoAP.LowLevelClient
                 var hostIpAddresses = await Dns.GetHostAddressesAsync(connectOptions.Host).ConfigureAwait(false);
                 if (hostIpAddresses.Length == 0)
                 {
-                    throw new CoapCommunicationException("Failed to resolve DNS end point", null);
+                    throw new CoapCommunicationException("Failed to resolve DNS end point", null!);
                 }
 
                 // We only use the first address for now.
-                return new IPEndPoint(hostIpAddresses[0], _connectOptions.Port);
+                return new IPEndPoint(hostIpAddresses[0], connectOptions.Port);
             }
             catch (Exception exception)
             {

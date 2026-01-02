@@ -22,7 +22,7 @@ namespace Moton.CoAP.Client
             return hash;
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             var other = obj as CoapMessageToken;
             if (other == null)

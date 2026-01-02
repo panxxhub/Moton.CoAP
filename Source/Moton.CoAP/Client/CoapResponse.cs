@@ -10,9 +10,9 @@
         public CoapResponseOptions Options
         {
             get; set;
-        }
+        } = new CoapResponseOptions();
 
-        public byte[] Payload
+        public byte[]? Payload
         {
             get; set;
         }

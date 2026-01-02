@@ -28,7 +28,7 @@
             return Class.GetHashCode() ^ Detail.GetHashCode();
         }
 
-        public override bool Equals(object other)
+        public override bool Equals(object? other)
         {
             if (other == null)
             {

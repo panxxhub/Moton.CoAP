@@ -5,11 +5,11 @@
         public byte[] Identity
         {
             get; set;
-        }
+        } = null!;
 
         public byte[] Key
         {
             get; set;
-        }
+        } = null!;
     }
 }

@@ -4,6 +4,6 @@
     {
         public uint SequenceNumber { get; set; }
 
-        public CoapResponse Response { get; set; }
+        public CoapResponse? Response { get; set; }
     }
 }

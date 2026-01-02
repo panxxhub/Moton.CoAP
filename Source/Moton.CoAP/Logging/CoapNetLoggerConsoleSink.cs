@@ -12,7 +12,7 @@ namespace Moton.CoAP.Logging
             }
 
             var formattedMessage = logMessage.Message;
-            if (logMessage.Parameters != null)
+            if (logMessage.Parameters != null && logMessage.Message != null)
             {
                 formattedMessage = string.Format(logMessage.Message, logMessage.Parameters);
             }

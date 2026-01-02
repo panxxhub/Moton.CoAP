@@ -11,7 +11,7 @@ namespace Moton.CoAP.Protocol
             get; set;
         }
 
-        public byte[] Token
+        public byte[]? Token
         {
             get; set;
         }
@@ -19,7 +19,7 @@ namespace Moton.CoAP.Protocol
         public CoapMessageCode Code
         {
             get; set;
-        }
+        } = CoapMessageCodes.Empty;
 
         public ushort Id
         {
@@ -29,7 +29,7 @@ namespace Moton.CoAP.Protocol
         public List<CoapMessageOption> Options
         {
             get; set;
-        }
+        } = new List<CoapMessageOption>();
 
         public ArraySegment<byte> Payload
         {

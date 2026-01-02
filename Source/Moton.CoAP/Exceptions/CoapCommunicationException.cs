@@ -5,7 +5,7 @@ namespace Moton.CoAP.Exceptions
 {
     public class CoapCommunicationException : IOException
     {
-        public CoapCommunicationException(string message, Exception exception)
+        public CoapCommunicationException(string message, Exception? exception)
             : base(message, exception)
         {
         }

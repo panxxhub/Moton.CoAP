@@ -12,14 +12,14 @@ namespace Moton.CoAP.Extensions.DTLS
     {
         readonly SecureRandom _secureRandom = new SecureRandom();
 
-        UdpTransport _udpTransport;
-        DtlsTransport _dtlsTransport;
-        DtlsClient _dtlsClient;
+        UdpTransport? _udpTransport;
+        DtlsTransport? _dtlsTransport;
+        DtlsClient? _dtlsClient;
 
         public IDtlsCredentials Credentials
         {
             get; set;
-        }
+        } = null!;
 
         public DtlsVersion DtlsVersion
         {
@@ -58,7 +58,7 @@ namespace Moton.CoAP.Extensions.DTLS
                     }
                     catch (OperationCanceledException) when (timeoutCts.IsCancellationRequested && !cancellationToken.IsCancellationRequested)
                     {
-                        throw new DtlsException("DTLS handshake timed out.", null);
+                        throw new DtlsException("DTLS handshake timed out.", null!);
                     }
                 }
             }
@@ -68,7 +68,7 @@ namespace Moton.CoAP.Extensions.DTLS
 
                 cancellationToken.ThrowIfCancellationRequested();
                 
-                throw new DtlsException($"Received alert {AlertDescription.GetText(_dtlsClient?.ReceivedAlert ?? 0xFF)}.", null)
+                throw new DtlsException($"Received alert {AlertDescription.GetText(_dtlsClient?.ReceivedAlert ?? 0xFF)}.", null!)
                 {
                     ReceivedAlert = _dtlsClient?.ReceivedAlert ?? 0xFF
                 };
@@ -84,11 +84,11 @@ namespace Moton.CoAP.Extensions.DTLS
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            using (cancellationToken.Register(() => _udpTransport.Close()))
+            using (cancellationToken.Register(() => _udpTransport?.Close()))
             {
                 try
                 {
-                    var received = _dtlsTransport.Receive(buffer.Array, buffer.Offset, buffer.Count, 0);
+                    var received = _dtlsTransport!.Receive(buffer.Array, buffer.Offset, buffer.Count, 0);
                     return Task.FromResult(received);
                 }
                 catch (ObjectDisposedException)
@@ -106,7 +106,7 @@ namespace Moton.CoAP.Extensions.DTLS
         {
             cancellationToken.ThrowIfCancellationRequested();
             
-            _dtlsTransport.Send(buffer.Array, buffer.Offset, buffer.Count);
+            _dtlsTransport!.Send(buffer.Array, buffer.Offset, buffer.Count);
             return Task.FromResult(0);
         }
 

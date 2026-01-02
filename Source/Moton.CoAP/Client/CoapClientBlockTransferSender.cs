@@ -94,7 +94,7 @@ namespace Moton.CoAP.Client
                 "Starting Block1 transfer: {0} bytes in {1} blocks of {2} bytes.",
                 payload.Count, totalBlocks, _blockSize);
 
-            CoapMessage lastResponse = null;
+            CoapMessage? lastResponse = null;
             var currentBlockNumber = 0;
             var effectiveBlockSize = _blockSize;
 
@@ -112,7 +112,10 @@ namespace Moton.CoAP.Client
 
                 // Create block payload
                 var blockPayload = new byte[blockPayloadSize];
-                Array.Copy(payload.Array, payload.Offset + offset, blockPayload, 0, blockPayloadSize);
+                if (payload.Array != null)
+                {
+                    Array.Copy(payload.Array, payload.Offset + offset, blockPayload, 0, blockPayloadSize);
+                }
 
                 // Create request message for this block
                 var blockRequest = CloneRequestMessage(requestTemplate);
@@ -179,7 +182,7 @@ namespace Moton.CoAP.Client
                 currentBlockNumber++;
             }
 
-            return lastResponse;
+            return lastResponse!;
         }
 
         /// <summary>
@@ -188,12 +191,36 @@ namespace Moton.CoAP.Client
         /// </summary>
         static int NormalizeBlockSize(int blockSize)
         {
-            if (blockSize <= 16) return 16;
-            if (blockSize <= 32) return 32;
-            if (blockSize <= 64) return 64;
-            if (blockSize <= 128) return 128;
-            if (blockSize <= 256) return 256;
-            if (blockSize <= 512) return 512;
+            if (blockSize <= 16)
+            {
+                return 16;
+            }
+
+            if (blockSize <= 32)
+            {
+                return 32;
+            }
+
+            if (blockSize <= 64)
+            {
+                return 64;
+            }
+
+            if (blockSize <= 128)
+            {
+                return 128;
+            }
+
+            if (blockSize <= 256)
+            {
+                return 256;
+            }
+
+            if (blockSize <= 512)
+            {
+                return 512;
+            }
+
             return 1024;
         }
 
@@ -207,7 +234,7 @@ namespace Moton.CoAP.Client
                 Type = original.Type,
                 Code = original.Code,
                 Token = original.Token,
-                Options = new List<CoapMessageOption>(original.Options)
+                Options = original.Options != null ? new List<CoapMessageOption>(original.Options) : new List<CoapMessageOption>()
             };
         }
 
@@ -216,7 +243,7 @@ namespace Moton.CoAP.Client
         /// </summary>
         static bool IsSuccessResponse(CoapMessage response)
         {
-            return response.Code.Class == 2;
+            return response.Code?.Class == 2;
         }
     }
 }

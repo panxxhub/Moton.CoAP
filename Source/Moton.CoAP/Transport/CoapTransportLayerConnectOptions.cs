@@ -7,6 +7,6 @@ namespace Moton.CoAP.Transport
         public IPEndPoint EndPoint
         {
             get; set;
-        }
+        } = null!;
     }
 }

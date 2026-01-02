@@ -14,7 +14,7 @@ namespace Moton.CoAP.Client
             get; set;
         }
 
-        public byte[] ETag
+        public byte[]? ETag
         {
             get; set;
         }

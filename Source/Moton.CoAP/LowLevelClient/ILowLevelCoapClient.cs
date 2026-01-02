@@ -9,6 +9,6 @@ namespace Moton.CoAP.LowLevelClient
     {
         Task SendAsync(CoapMessage message, CancellationToken cancellationToken);
 
-        Task<CoapMessage> ReceiveAsync(CancellationToken cancellationToken);
+        Task<CoapMessage?> ReceiveAsync(CancellationToken cancellationToken);
     }
 }

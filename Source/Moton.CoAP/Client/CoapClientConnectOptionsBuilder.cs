@@ -93,7 +93,7 @@ namespace Moton.CoAP.Client
         {
             if (_options.TransportLayerFactory == null)
             {
-                throw new CoapClientConfigurationInvalidException("Transport layer is not set.", null);
+                throw new CoapClientConfigurationInvalidException("Transport layer is not set.", null!);
             }
 
             return _options;

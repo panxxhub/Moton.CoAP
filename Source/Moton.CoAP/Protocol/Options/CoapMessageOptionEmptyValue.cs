@@ -2,7 +2,7 @@
 {
     public sealed class CoapMessageOptionEmptyValue : CoapMessageOptionValue
     {
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is CoapMessageOptionEmptyValue;
         }

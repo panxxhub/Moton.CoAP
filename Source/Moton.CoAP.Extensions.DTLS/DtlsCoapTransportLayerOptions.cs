@@ -6,7 +6,7 @@
         {
             get;
             set;
-        }
+        } = null!;
 
         public DtlsVersion DtlsVersion
         {

@@ -73,7 +73,7 @@ namespace Moton.CoAP.Extensions.DTLS
             }
         }
 
-        public override TlsAuthentication GetAuthentication()
+        public override TlsAuthentication? GetAuthentication()
         {
             return null;
         }

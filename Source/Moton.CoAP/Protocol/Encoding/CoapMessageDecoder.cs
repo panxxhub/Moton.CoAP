@@ -41,7 +41,7 @@ namespace Moton.CoAP.Protocol.Encoding
                 var id = reader.ReadByte() << 8;
                 id |= reader.ReadByte();
 
-                byte[] token = null;
+                byte[]? token = null;
                 if (tokenLength > 0)
                 {
                     token = reader.ReadBytes(tokenLength);
@@ -204,7 +204,7 @@ namespace Moton.CoAP.Protocol.Encoding
                     length = reader.ReadBits(16) + 269;
                 }
 
-                byte[] value = null;
+                byte[]? value = null;
                 if (length > 0)
                 {
                     value = reader.ReadBytes(length);
@@ -213,7 +213,7 @@ namespace Moton.CoAP.Protocol.Encoding
                 var number = lastNumber + delta;
                 lastNumber = number;
 
-                options.Add(CreateOption((CoapMessageOptionNumber)number, value));
+                options.Add(CreateOption((CoapMessageOptionNumber)number, value ?? Array.Empty<byte>()));
             }
 
             return options;

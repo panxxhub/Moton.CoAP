@@ -7,8 +7,8 @@ namespace Moton.CoAP.Transport
 {
     public sealed class TcpCoapTransportLayer : ICoapTransportLayer
     {
-        TcpClient _tcpClient;
-        NetworkStream _networkStream;
+        TcpClient? _tcpClient;
+        NetworkStream? _networkStream;
 
         public async Task ConnectAsync(CoapTransportLayerConnectOptions options, CancellationToken cancellationToken)
         {
@@ -40,12 +40,12 @@ namespace Moton.CoAP.Transport
 
         public Task<int> ReceiveAsync(ArraySegment<byte> buffer, CancellationToken cancellationToken)
         {
-            return _networkStream.ReadAsync(buffer.Array, buffer.Offset, buffer.Count, cancellationToken);
+            return _networkStream!.ReadAsync(buffer.Array!, buffer.Offset, buffer.Count, cancellationToken);
         }
 
         public Task SendAsync(ArraySegment<byte> buffer, CancellationToken cancellationToken)
         {
-            return _networkStream.WriteAsync(buffer.Array, buffer.Offset, buffer.Count, cancellationToken);
+            return _networkStream!.WriteAsync(buffer.Array!, buffer.Offset, buffer.Count, cancellationToken);
         }
     }
 }

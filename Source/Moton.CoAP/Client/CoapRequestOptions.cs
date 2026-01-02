@@ -7,7 +7,7 @@ namespace Moton.CoAP.Client
         /// <summary>
         /// This is only required when accessing virtual servers.
         /// </summary>
-        public string UriHost
+        public string? UriHost
         {
             get; set;
         }
@@ -20,12 +20,12 @@ namespace Moton.CoAP.Client
             get; set;
         }
 
-        public string UriPath
+        public string? UriPath
         {
             get; set;
         }
 
-        public ICollection<string> UriQuery
+        public ICollection<string>? UriQuery
         {
             get; set;
         }

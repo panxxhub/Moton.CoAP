@@ -9,7 +9,7 @@ namespace Moton.CoAP.Client
         public string Host
         {
             get; set;
-        }
+        } = string.Empty;
 
         public int Port { get; set; } = CoapDefaultPort.Unencrypted;
 

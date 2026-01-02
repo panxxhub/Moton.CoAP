@@ -49,7 +49,7 @@ namespace Moton.CoAP.Client
                     return false;
                 }
 
-                if (!_observedResponseHandlers.TryGetValue(new CoapMessageToken(message.Token), out var responseHandler))
+                if (!_observedResponseHandlers.TryGetValue(new CoapMessageToken(message.Token!), out var responseHandler))
                 {
                     await DeregisterObservation(message).ConfigureAwait(false);
                     return true;

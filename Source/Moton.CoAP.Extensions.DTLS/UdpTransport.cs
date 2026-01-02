@@ -13,7 +13,7 @@ namespace Moton.CoAP.Extensions.DTLS
         
         EndPoint _remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
         
-        Socket _socket;
+        Socket? _socket;
 
         public UdpTransport(CoapTransportLayerConnectOptions connectOptions)
         {
@@ -44,7 +44,7 @@ namespace Moton.CoAP.Extensions.DTLS
             // Set receive timeout - use waitMillis if positive, otherwise use a default timeout
             // This prevents indefinite blocking during DTLS handshake
             int timeoutMs = waitMillis > 0 ? waitMillis : 5000; // Default 5 second timeout
-            _socket.ReceiveTimeout = timeoutMs;
+            _socket!.ReceiveTimeout = timeoutMs;
 
             try
             {
@@ -66,7 +66,7 @@ namespace Moton.CoAP.Extensions.DTLS
 
             ThrowIfNotConnected();
 
-            _socket.SendTo(buf, off, len, SocketFlags.None, _connectOptions.EndPoint);
+            _socket!.SendTo(buf, off, len, SocketFlags.None, _connectOptions.EndPoint);
         }
 
         public void Close()
@@ -101,7 +101,7 @@ namespace Moton.CoAP.Extensions.DTLS
         {
             if (_socket == null)
             {
-                throw new CoapCommunicationException("The connection is closed.", null);
+                throw new CoapCommunicationException("The connection is closed.", null!);
             }
         }
     }

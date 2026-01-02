@@ -18,7 +18,10 @@ namespace Moton.CoAP.Client
 
         public CoapObserveOptionsBuilder WithQuery(string value)
         {
-            if (value is null) throw new ArgumentNullException(nameof(value));
+            if (value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
 
             if (_options.Request.Options.UriQuery == null)
             {

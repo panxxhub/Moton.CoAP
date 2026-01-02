@@ -12,17 +12,17 @@ namespace Moton.CoAP.Logging
 
         public void Trace(string source, string message, params object[] parameters)
         {
-            Log(CoapNetLogMessageLevel.Trace, source, null, message, parameters);
+            Log(CoapNetLogMessageLevel.Trace, source, null!, message, parameters);
         }
 
         public void Information(string source, string message, params object[] parameters)
         {
-            Log(CoapNetLogMessageLevel.Information, source, null, message, parameters);
+            Log(CoapNetLogMessageLevel.Information, source, null!, message, parameters);
         }
 
         public void Warning(string source, string message, params object[] parameters)
         {
-            Log(CoapNetLogMessageLevel.Warning, source, null, message, parameters);
+            Log(CoapNetLogMessageLevel.Warning, source, null!, message, parameters);
         }
 
         public void Warning(string source, Exception exception, string message, params object[] parameters)
@@ -32,7 +32,7 @@ namespace Moton.CoAP.Logging
 
         public void Error(string source, string message, params object[] parameters)
         {
-            Log(CoapNetLogMessageLevel.Error, source, null, message, parameters);
+            Log(CoapNetLogMessageLevel.Error, source, null!, message, parameters);
         }
 
         public void Error(string source, Exception exception, string message, params object[] parameters)

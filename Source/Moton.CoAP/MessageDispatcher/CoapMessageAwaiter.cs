@@ -35,7 +35,10 @@ namespace Moton.CoAP.MessageDispatcher
 
         public void Complete(CoapMessage message)
         {
-            if (message == null) throw new ArgumentNullException(nameof(message));
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
 
 #if NET452
             // To prevent deadlocks it is required to call the _TrySetResult_ method
@@ -51,7 +54,10 @@ namespace Moton.CoAP.MessageDispatcher
 
         public void Fail(Exception exception)
         {
-            if (exception == null) throw new ArgumentNullException(nameof(exception));
+            if (exception == null)
+            {
+                throw new ArgumentNullException(nameof(exception));
+            }
 
 #if NET452
             // To prevent deadlocks it is required to call the _TrySetResult_ method

@@ -39,7 +39,7 @@ namespace Moton.CoAP.Client
                 return;
             }
 
-            message.Options.Add(_optionFactory.CreateUriHost(request.Options.UriHost));
+            message.Options.Add(_optionFactory.CreateUriHost(request.Options.UriHost!));
         }
 
         void ApplyUriPort(CoapRequest request, CoapMessage message)
@@ -59,7 +59,7 @@ namespace Moton.CoAP.Client
                 return;
             }
 
-            var paths = request.Options.UriPath.Split(new [] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            var paths = request.Options.UriPath!.Split(new [] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var path in paths)
             {

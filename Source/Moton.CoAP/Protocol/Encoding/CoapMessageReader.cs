@@ -17,7 +17,7 @@ namespace Moton.CoAP.Protocol.Encoding
         {
             Debug.Assert(buffer.Array != null);
 
-            _buffer = buffer.Array;
+            _buffer = buffer.Array!;
             _position = buffer.Offset;
             _length = buffer.Count;
         }
