@@ -26,6 +26,11 @@ namespace Moton.CoAP.Client
 
         CoapClientConnectOptions? _connectOptions;
 
+        /// <summary>
+        /// Event raised when a block transfer progresses (Block1 upload or Block2 download).
+        /// </summary>
+        public event CoapBlockTransferProgressHandler? BlockTransferProgress;
+
         public CoapClient(CoapNetLogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -54,16 +59,59 @@ namespace Moton.CoAP.Client
 
             var requestMessage = _requestToMessageConverter.Convert(request);
 
-            var responseMessage = await RequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+            // Check if Block1 is needed for large payloads
+            var blockSize = _connectOptions?.PreferredBlockSize ?? CoapClientBlockTransferSender.DefaultBlockSize;
+            var enableBlockTransfer = _connectOptions?.EnableBlockTransfer ?? true;
+
+            CoapMessage responseMessage;
+
+            if (enableBlockTransfer && request.Payload.Count > blockSize)
+            {
+                // Use Block1 for large payloads
+                var sender = new CoapClientBlockTransferSender(this, _logger, blockSize);
+                sender.BlockSent += OnBlock1Progress;
+                try
+                {
+                    responseMessage = await sender.SendAsync(requestMessage, request.Payload, cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                finally
+                {
+                    sender.BlockSent -= OnBlock1Progress;
+                }
+            }
+            else
+            {
+                // Normal request (small payload or block transfer disabled)
+                responseMessage = await RequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
+            }
 
             var payload = responseMessage.Payload;
             if (CoapClientBlockTransferReceiver.IsBlockTransfer(responseMessage))
             {
-                payload = await new CoapClientBlockTransferReceiver(requestMessage, responseMessage, this, _logger)
-                    .ReceiveFullPayload(cancellationToken).ConfigureAwait(false);
+                var receiver = new CoapClientBlockTransferReceiver(requestMessage, responseMessage, this, _logger);
+                receiver.BlockReceived += OnBlock2Progress;
+                try
+                {
+                    payload = await receiver.ReceiveFullPayload(cancellationToken).ConfigureAwait(false);
+                }
+                finally
+                {
+                    receiver.BlockReceived -= OnBlock2Progress;
+                }
             }
 
             return _messageToResponseConverter.Convert(responseMessage, payload);
+        }
+
+        void OnBlock1Progress(object? sender, CoapBlockTransferProgress progress)
+        {
+            BlockTransferProgress?.Invoke(progress);
+        }
+
+        void OnBlock2Progress(object? sender, CoapBlockTransferProgress progress)
+        {
+            BlockTransferProgress?.Invoke(progress);
         }
 
         public async Task<CoapObserveResponse> ObserveAsync(CoapObserveOptions options,

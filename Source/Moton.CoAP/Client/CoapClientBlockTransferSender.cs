@@ -37,6 +37,11 @@ namespace Moton.CoAP.Client
         readonly int _blockSize;
 
         /// <summary>
+        /// Event raised after each block is sent and acknowledged.
+        /// </summary>
+        public event EventHandler<CoapBlockTransferProgress>? BlockSent;
+
+        /// <summary>
         /// Creates a new Block1 sender.
         /// </summary>
         /// <param name="client">The CoAP client to use for sending.</param>
@@ -143,6 +148,10 @@ namespace Moton.CoAP.Client
                 // Send and wait for response
                 lastResponse = await _client.RequestAsync(blockRequest, cancellationToken).ConfigureAwait(false);
 
+                // Raise progress event
+                RaiseBlockSent(currentBlockNumber, totalBlocks, effectiveBlockSize, 
+                    offset + blockPayloadSize, payload.Count);
+
                 // Check response
                 if (!IsSuccessResponse(lastResponse))
                 {
@@ -244,6 +253,19 @@ namespace Moton.CoAP.Client
         static bool IsSuccessResponse(CoapMessage response)
         {
             return response.Code?.Class == 2;
+        }
+
+        void RaiseBlockSent(int blockNumber, int totalBlocks, int blockSize, int bytesTransferred, int totalBytes)
+        {
+            BlockSent?.Invoke(this, new CoapBlockTransferProgress
+            {
+                Direction = CoapBlockTransferDirection.Upload,
+                BlockNumber = blockNumber,
+                TotalBlocks = totalBlocks,
+                BlockSize = blockSize,
+                BytesTransferred = bytesTransferred,
+                TotalBytes = totalBytes
+            });
         }
     }
 }

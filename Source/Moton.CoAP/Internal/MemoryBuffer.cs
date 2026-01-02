@@ -12,6 +12,11 @@ namespace Moton.CoAP.Internal
             _memoryStream = new MemoryStream(size);
         }
 
+        /// <summary>
+        /// Gets the current position (bytes written) in the buffer.
+        /// </summary>
+        public long Position => _memoryStream.Position;
+
         public void Write(byte buffer)
         {
             _memoryStream.WriteByte(buffer);
@@ -39,11 +44,7 @@ namespace Moton.CoAP.Internal
 
         public ArraySegment<byte> GetBuffer()
         {
-#if NETSTANDARD2_0
-            return new ArraySegment<byte>(_memoryStream.GetBuffer(), 0, (int)_memoryStream.Length);
-#else
             return new ArraySegment<byte>(_memoryStream.ToArray(), 0, (int)_memoryStream.Length);
-#endif
         }
 
         public void Dispose()

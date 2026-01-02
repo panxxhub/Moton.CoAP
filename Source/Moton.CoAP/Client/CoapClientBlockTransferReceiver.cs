@@ -18,6 +18,11 @@ namespace Moton.CoAP.Client
         readonly CoapClient _client;
         readonly CoapNetLogger _logger;
 
+        /// <summary>
+        /// Event raised after each block is received.
+        /// </summary>
+        public event EventHandler<CoapBlockTransferProgress>? BlockReceived;
+
         public CoapClientBlockTransferReceiver(CoapMessage requestMessage, CoapMessage firstResponseMessage, CoapClient client, CoapNetLogger logger)
         {
             _requestMessage = requestMessage ?? throw new ArgumentNullException(nameof(requestMessage));
@@ -53,19 +58,19 @@ namespace Moton.CoAP.Client
             var requestBlock2Option = new CoapMessageOption(CoapMessageOptionNumber.Block2, new CoapMessageOptionUintValue(0));
             requestMessage.Options.Add(requestBlock2Option);
 
-            // Crate a buffer which is pre sized to at least 4 blocks.
+            // Create a buffer which is pre sized to at least 4 blocks.
             using (var buffer = new MemoryBuffer(receivedBlock2OptionValue.Size * 4))
             {
                 buffer.Write(_firstResponseMessage.Payload);
+                
+                // Raise progress for first block
+                RaiseBlockReceived(0, receivedBlock2OptionValue.Size, (int)buffer.Position);
 
                 while (receivedBlock2OptionValue.HasFollowingBlocks)
                 {
-                    // Patch Block1 so that we get the next chunk.
-                    // TODO: Move custom size to client connect options!
-                    //receivedBlock2OptionValue.Size = 1024;
+                    // Patch Block2 so that we get the next chunk.
                     receivedBlock2OptionValue.Number++;
 
-                    // TODO: Avoid setting value. Create new instead.
                     requestBlock2Option.Value = new CoapMessageOptionUintValue(CoapBlockTransferOptionValueEncoder.Encode(receivedBlock2OptionValue));
 
                     var response = await _client.RequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
@@ -75,6 +80,9 @@ namespace Moton.CoAP.Client
                     _logger.Trace(nameof(CoapClientBlockTransferReceiver), "Received Block2 {0}.", FormatBlock2OptionValue(receivedBlock2OptionValue));
 
                     buffer.Write(response.Payload);
+                    
+                    // Raise progress for each block
+                    RaiseBlockReceived(receivedBlock2OptionValue.Number, receivedBlock2OptionValue.Size, (int)buffer.Position);
                 }
 
                 return buffer.GetBuffer();
@@ -84,6 +92,21 @@ namespace Moton.CoAP.Client
         static string FormatBlock2OptionValue(CoapBlockTransferOptionValue value)
         {
             return $"{value.Number}/{(value.HasFollowingBlocks ? 'M' : '_')}/{value.Size}";
+        }
+
+        void RaiseBlockReceived(int blockNumber, int blockSize, int bytesReceived)
+        {
+            // For Block2, we don't know total size until the last block (when HasFollowingBlocks is false).
+            // We estimate based on current progress.
+            BlockReceived?.Invoke(this, new CoapBlockTransferProgress
+            {
+                Direction = CoapBlockTransferDirection.Download,
+                BlockNumber = blockNumber,
+                TotalBlocks = blockNumber + 1, // Estimate - updated when transfer completes
+                BlockSize = blockSize,
+                BytesTransferred = bytesReceived,
+                TotalBytes = bytesReceived // Estimate - we don't know total until done
+            });
         }
     }
 }
