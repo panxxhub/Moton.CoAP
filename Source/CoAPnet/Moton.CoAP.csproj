@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+
+    <AssemblyName>Moton.CoAP</AssemblyName>
+    <RootNamespace>Moton.CoAP</RootNamespace>
+    
+    <Company>Moton</Company>
+    <Product>Moton.CoAP</Product>
+    <Description>Lightweight CoAP client library for .NET. Forked from CoAPnet for servo-tuner and Moton projects.</Description>
+    <Authors>Moton (forked from CoAPnet contributors)</Authors>
+    <Copyright>Original: Christian Kratky 2019-2021 (MIT License). Fork: Moton 2026.</Copyright>
+    
+    <PackageId>Moton.CoAP</PackageId>
+    <PackageTags>CoAP Client IoT Servo Moton</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>CS1591</NoWarn>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+  </PropertyGroup>
+
+</Project>
