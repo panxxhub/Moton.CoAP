@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Moton.CoAP.Extensions.DTLS\Moton.CoAP.Extensions.DTLS.csproj" />
+    <ProjectReference Include="..\Moton.CoAP\Moton.CoAP.csproj" />
+  </ItemGroup>
+
+</Project>

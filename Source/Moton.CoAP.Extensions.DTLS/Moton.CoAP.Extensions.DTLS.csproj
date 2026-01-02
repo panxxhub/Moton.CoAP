@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net452;netstandard2.0;net5.0;net6.0</TargetFrameworks>
+
+		<AssemblyName>Moton.CoAP.Extensions.DTLS</AssemblyName>
+		<RootNamespace>Moton.CoAP.Extensions.DTLS</RootNamespace>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Company>Moton</Company>
+		<Product>Moton.CoAP</Product>
+		<Description>Moton.CoAP DTLS extension for secure CoAP communication.</Description>
+		<Authors>Moton Contributors</Authors>
+		<PackageId>Moton.CoAP.Extensions.DTLS</PackageId>
+		<SignAssembly>false</SignAssembly>
+		<DelaySign>false</DelaySign>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Copyright>Moton 2024-2026</Copyright>
+		<PackageProjectUrl>https://github.com/panxxhub/zephyr-servo</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/panxxhub/zephyr-servo.git</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>CoAP DTLS Security IoT</PackageTags>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+		<PackageIcon>nuget.png</PackageIcon>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<LangVersion>7.3</LangVersion>
+		<PackageReleaseNotes>DTLS extension for Moton.CoAP</PackageReleaseNotes>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>CS1591</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\Images\nuget.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Moton.CoAP\Moton.CoAP.csproj" />
+
+		<PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
+	</ItemGroup>
+
+</Project>

@@ -1,6 +1,6 @@
-using CoAPnet;
-using CoAPnet.Client;
-using CoAPnet.Extensions.DTLS;
+using Moton.CoAP;
+using Moton.CoAP.Client;
+using Moton.CoAP.Extensions.DTLS;
 #pragma warning disable CS8321
 
 static async Task RequestStatusFromTradfriGateway()

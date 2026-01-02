@@ -1,0 +1,62 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moton.CoAP.Tests", "Moton.CoAP.Tests\Moton.CoAP.Tests.csproj", "{463E5256-8937-4D84-9907-56D8E80BCE76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moton.CoAP", "Moton.CoAP\Moton.CoAP.csproj", "{500426FA-8449-4861-94E7-AC95554C097C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moton.CoAP.TestClient", "Moton.CoAP.TestClient\Moton.CoAP.TestClient.csproj", "{521413FE-A595-4B43-B087-5CBBDF9811C0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Moton.CoAP.Extensions.DTLS", "Moton.CoAP.Extensions.DTLS\Moton.CoAP.Extensions.DTLS.csproj", "{5A3ABC7C-9771-48DA-B8EF-BFE0F36EFF82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{050EC2DA-10AC-4453-BE76-B3BA90CA1EB6}"
+	ProjectSection(SolutionItems) = preProject
+		..\Build\build.ps1 = ..\Build\build.ps1
+		..\Build\ReleaseNotes.md = ..\Build\ReleaseNotes.md
+		..\Build\upload.ps1 = ..\Build\upload.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{97B75008-7EE2-42F8-A2C0-6D6C4A4BF6A4}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Moton.CoAP.Samples", "..\Samples\Moton.CoAP.Samples.csproj", "{0CF8564A-BAFD-4F69-AF01-4F4F531C1B6C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{463E5256-8937-4D84-9907-56D8E80BCE76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463E5256-8937-4D84-9907-56D8E80BCE76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463E5256-8937-4D84-9907-56D8E80BCE76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463E5256-8937-4D84-9907-56D8E80BCE76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{500426FA-8449-4861-94E7-AC95554C097C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{500426FA-8449-4861-94E7-AC95554C097C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{500426FA-8449-4861-94E7-AC95554C097C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{500426FA-8449-4861-94E7-AC95554C097C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{521413FE-A595-4B43-B087-5CBBDF9811C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{521413FE-A595-4B43-B087-5CBBDF9811C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{521413FE-A595-4B43-B087-5CBBDF9811C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{521413FE-A595-4B43-B087-5CBBDF9811C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A3ABC7C-9771-48DA-B8EF-BFE0F36EFF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A3ABC7C-9771-48DA-B8EF-BFE0F36EFF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A3ABC7C-9771-48DA-B8EF-BFE0F36EFF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A3ABC7C-9771-48DA-B8EF-BFE0F36EFF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF8564A-BAFD-4F69-AF01-4F4F531C1B6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF8564A-BAFD-4F69-AF01-4F4F531C1B6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF8564A-BAFD-4F69-AF01-4F4F531C1B6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF8564A-BAFD-4F69-AF01-4F4F531C1B6C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B273A802-8F2B-4C8C-A085-F7213743847B}
+	EndGlobalSection
+EndGlobal
